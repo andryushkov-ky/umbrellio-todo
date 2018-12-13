@@ -7,21 +7,52 @@ class Main extends Component {
     constructor() {
         super();
         this.state = {
-            todos: [
-                {text:"TEST1", key:1231},
-                {text:"TEST2", key:1232}
-            ],
-            currentValue: {text:'', key:''},
+            todos: [{text: 'Default', key: 123, completed: false}, {text: 'Default', key: 1234, completed: false}],
+            currentValue: '',
         }
     }
 
-    handleInput = e => {
-        console.log("got input val");
-    };
-
     addTask = e => {
         e.preventDefault();
-        console.log("got task");
+
+        if (this.state.currentValue == '') return null;
+
+        const task = {
+            text: this.state.currentValue,
+            completed: false,
+            key: Date.now()
+        };
+        const todos = [task, ...this.state.todos];
+        this.setState({
+            todos: todos,
+            currentValue: ''
+        });
+        e.target.reset();
+    };
+
+    handleInput = e => {
+        this.setState({
+            currentValue: e.target.value
+        })
+    };
+
+    deleteTask = key => {
+        const newArr = this.state.todos.filter(item => {
+            return item.key !== key
+        });
+        this.setState({
+            todos: newArr,
+        })
+    };
+
+    toggleTask = key => {
+        const newArr = this.state.todos;
+        const index = newArr.findIndex((obj => obj.key === key));
+        newArr[index].completed = !newArr[index].completed;
+
+        this.setState({
+            todos: newArr,
+        })
     };
 
     render() {
@@ -33,6 +64,8 @@ class Main extends Component {
                 />
                 <List
                     tasks={this.state.todos}
+                    deleteTask={this.deleteTask}
+                    toggleTask={this.toggleTask}
                 />
             </div>
         );

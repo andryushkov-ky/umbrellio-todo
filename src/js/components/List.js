@@ -4,13 +4,18 @@ import ListItem from './ListItem'
 
 class List extends Component {
     render() {
-        console.log("HEy there", this.props.tasks);
         return (
             <div className="list">
                 {
                     this.props.tasks &&
-                    this.props.tasks.length &&
-                    this.props.tasks.map(item => <ListItem text={item.text} key={item.key} />)
+                    !!this.props.tasks.length &&
+                    this.props.tasks.map((item, key) =>
+                        <ListItem
+                            item={item}
+                            key={key}
+                            deleteTask={this.props.deleteTask}
+                            toggleTask={this.props.toggleTask}
+                    />)
                 }
             </div>
         );

@@ -12,3 +12,140 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.header {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #a2a2a2;
+}
+
+.addform {
+  display: flex;
+  justify-content: center;
+}
+
+.main-input {
+  padding: 5px 20px;
+  width: 200px;
+  border: none;
+  border-bottom: 2px solid #e2e2e2;
+  font-size: 17px;
+  color: #333;
+  outline: none;
+}
+
+.main-btn {
+  margin-left: 15px;
+  padding: 5px 15px;
+  border-radius: 10px;
+  background-color: #1eb4eb;
+  color: #fff;
+  font-weight: 500;
+  font-size: 15px;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.main-btn:hover {
+  background-color: #219beb;
+}
+
+.list {
+  display: flex;
+  margin: 20px auto;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 600px;
+}
+
+.item {
+  display: flex;
+  justify-content: space-between;
+  background: #efefef;
+  color: #333;
+  border-radius: 7px;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+}
+
+.sub-panel {
+
+}
+
+.delete {
+  display: block;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.delete:hover:before,
+.delete:hover:after {
+  background-color: #fb0000;
+}
+
+.delete:before,
+.delete:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 20px;
+  background-color: #b51f1f;
+  margin-left: 9px;
+}
+
+.delete:before {
+  transform: rotate(45deg);
+}
+
+.delete:after {
+  transform: rotate(-45deg);
+}
+
+.wrap-text {
+  display: flex;
+}
+
+.check {
+  position: relative;
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid #1eb4eb;
+  border-radius: 50%;
+  margin-right: 10px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+.check:hover {
+  border: 2px solid #077aa3;
+}
+
+.check.toggle-true {
+  border: 2px solid #29b86b;
+}
+
+.check.toggle-true:before {
+  content: "\262D";
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-left: 4px;
+  margin-top: -2px;
+  font-size: 17px;
+  font-weight: 500;
+  color: #ea8787;
+}
+
+.toggle-true + span {
+  text-decoration: line-through;
+  color: #bebebe;
+}
