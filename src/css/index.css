@@ -65,6 +65,7 @@ code {
 .item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   background: #efefef;
   color: #333;
   border-radius: 7px;
@@ -73,7 +74,7 @@ code {
 }
 
 .sub-panel {
-
+  display: flex;
 }
 
 .delete {
@@ -111,13 +112,19 @@ code {
 
 .wrap-text {
   display: flex;
+  align-items: center;
+}
+
+.text {
+  padding: 0 10px 0 0;
 }
 
 .check {
   position: relative;
-  display: block;
-  width: 20px;
-  height: 20px;
+  display: flex;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
   border: 2px solid #1eb4eb;
   border-radius: 50%;
   margin-right: 10px;
@@ -148,4 +155,52 @@ code {
 .toggle-true + span {
   text-decoration: line-through;
   color: #bebebe;
+}
+
+.edit {
+  display: block;
+  position: relative;
+  width: 20px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.edit:before {
+  content: '\270E';
+  position: absolute;
+  top: -6px;
+  left: 0;
+  color: #1eb4eb;
+  font-size: 22px;
+}
+
+.edit:hover:before {
+  color: #2a81eb;
+}
+
+.show-mode {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.task-input {
+  border: none;
+  width: 460px;
+  padding: 5px 15px;
+  outline: none;
+}
+
+.task-btn {
+  margin-left: 12px;
+  padding: 5px 17px;
+  border-radius: 3px;
+  background-color: #1eb4eb;
+  color: #fff;
+  font-weight: 500;
+  font-size: 13px;
+  border: none;
+  cursor: pointer;
+  outline: none;
 }

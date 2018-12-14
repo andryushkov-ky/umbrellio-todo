@@ -9,7 +9,9 @@ class Main extends Component {
         this.state = {
             todos: [{text: 'Default', key: 123, completed: false}, {text: 'Default', key: 1234, completed: false}],
             currentValue: '',
-        }
+        };
+
+        this.editTask = this.editTask.bind(this);
     }
 
     addTask = e => {
@@ -46,12 +48,22 @@ class Main extends Component {
     };
 
     toggleTask = key => {
-        const newArr = this.state.todos;
-        const index = newArr.findIndex((obj => obj.key === key));
-        newArr[index].completed = !newArr[index].completed;
+        const arr = this.state.todos;
+        const index = arr.findIndex((obj => obj.key === key));
+        arr[index].completed = !arr[index].completed;
 
         this.setState({
-            todos: newArr,
+            todos: arr,
+        })
+    };
+
+    editTask = (key, newText) => {
+        const arr = this.state.todos;
+        const index = arr.findIndex((obj => obj.key === key));
+        arr[index].text = newText;
+
+        this.setState({
+            todos: arr,
         })
     };
 
@@ -66,6 +78,7 @@ class Main extends Component {
                     tasks={this.state.todos}
                     deleteTask={this.deleteTask}
                     toggleTask={this.toggleTask}
+                    editTask={this.editTask}
                 />
             </div>
         );

@@ -15,6 +15,7 @@ class List extends Component {
                             key={key}
                             deleteTask={this.props.deleteTask}
                             toggleTask={this.props.toggleTask}
+                            editTask={this.props.editTask}
                     />)
                 }
             </div>
