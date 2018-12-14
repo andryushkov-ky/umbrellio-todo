@@ -2,17 +2,30 @@ import React, { Component } from 'react';
 
 import AddForm from '../components/AddForm';
 import List from '../components/List'
+const update = require('immutability-helper');
 
 class Main extends Component {
     constructor() {
         super();
         this.state = {
-            todos: [{text: 'Default', key: 123, completed: false}, {text: 'Default', key: 1234, completed: false}],
+            todos: [
+                {text: 'Default 1', key: 123, completed: false},
+                {text: 'Default 2', key: 12343, completed: false},
+                {text: 'Default 3', key: 12344, completed: false},
+                {text: 'Default 4', key: 12345, completed: false}
+            ],
             currentValue: '',
         };
 
         this.editTask = this.editTask.bind(this);
+        this.moveCard = this.moveCard.bind(this);
     }
+
+    handleInput = e => {
+        this.setState({
+            currentValue: e.target.value
+        })
+    };
 
     addTask = e => {
         e.preventDefault();
@@ -32,9 +45,13 @@ class Main extends Component {
         e.target.reset();
     };
 
-    handleInput = e => {
+    toggleTask = key => {
+        const arr = this.state.todos;
+        const index = arr.findIndex((obj => obj.key === key));
+        arr[index].completed = !arr[index].completed;
+
         this.setState({
-            currentValue: e.target.value
+            todos: arr,
         })
     };
 
@@ -44,16 +61,6 @@ class Main extends Component {
         });
         this.setState({
             todos: newArr,
-        })
-    };
-
-    toggleTask = key => {
-        const arr = this.state.todos;
-        const index = arr.findIndex((obj => obj.key === key));
-        arr[index].completed = !arr[index].completed;
-
-        this.setState({
-            todos: arr,
         })
     };
 
@@ -67,19 +74,31 @@ class Main extends Component {
         })
     };
 
+    moveCard = (dragIndex, hoverIndex) => {
+        const { todos } = this.state;
+        const dragTask = todos[dragIndex];
+
+        this.setState(
+            update(this.state, {
+                todos: {
+                    $splice: [[dragIndex, 1], [hoverIndex, 0, dragTask]],
+                },
+            }),
+        )
+    };
+
     render() {
         return (
             <div className="main">
                 <AddForm
                     addTask={this.addTask}
-                    handleInput={this.handleInput}
-                />
+                    handleInput={this.handleInput}/>
                 <List
                     tasks={this.state.todos}
                     deleteTask={this.deleteTask}
                     toggleTask={this.toggleTask}
                     editTask={this.editTask}
-                />
+                    moveCard={this.moveCard}/>
             </div>
         );
     }

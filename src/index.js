@@ -16,10 +16,7 @@ class Main {
         const container = document.getElementById("root");
 
         ReactDOM.unmountComponentAtNode(container);
-        ReactDOM.render(
-            <App />,
-            container
-        );
+        ReactDOM.render(<App />, container);
     }
 }
 

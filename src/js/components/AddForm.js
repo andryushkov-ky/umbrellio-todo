@@ -9,8 +9,7 @@ class AddForm extends Component {
                         className="main-input"
                         placeholder="Task"
                         value={this.props.currentValue}
-                        onChange={this.props.handleInput}
-                    />
+                        onChange={this.props.handleInput}/>
                     <button
                         className="main-btn"
                         type="submit">
