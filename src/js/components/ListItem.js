@@ -63,7 +63,7 @@ const taskTarget = {
         // to avoid expensive index searches.
         monitor.getItem().index = hoverIndex;
     },
-}
+};
 
 class ListItem extends Component {
     constructor(props) {
@@ -73,18 +73,15 @@ class ListItem extends Component {
             edit: false,
             currentValue: this.props.item.text
         };
-
-        this.toggleEditState = this.toggleEditState.bind(this);
-        this.handleInput = this.handleInput.bind(this);
     }
 
-    toggleEditState() {
+    toggleEditState = () => {
         const state = this.state.edit;
 
         this.setState({
             edit: !state
         })
-    }
+    };
 
     handleInput = e => {
         this.setState({
@@ -96,7 +93,7 @@ class ListItem extends Component {
         const newText = this.state.currentValue;
         e.preventDefault();
 
-        if (newText == '') return null;
+        if (this.validateInput()) return null;
 
         if (newText !== this.props.item.text) {
             this.props.editTask(this.props.item.key, newText);
@@ -105,10 +102,55 @@ class ListItem extends Component {
         this.toggleEditState();
     };
 
+    validateInput = () => {
+        return this.state.currentValue.trim() === ''
+    };
+
+    renderTextItem = () => {
+        return (
+            <div className="show-mode">
+                <div className="wrap-text">
+                    <div
+                        className={`check toggle-${this.props.completed}`}
+                        onClick={() => this.props.toggleTask(this.props.item.key)}>
+                    </div>
+                    <span className="text">{this.props.item.text}</span>
+                </div>
+                <div className="sub-panel">
+                    <span
+                        className="edit"
+                        onClick={this.toggleEditState}>
+                    </span>
+                    <span
+                        className="delete"
+                        onClick={() => this.props.deleteTask(this.props.item.key)}>
+                    </span>
+                </div>
+            </div>
+        )
+    };
+
+    renderEditItem = () => {
+        return (
+            <div className="edit-mode">
+                <form onSubmit={this.submit}>
+                    <input
+                        className="task-input"
+                        placeholder="Edit task"
+                        value={this.state.currentValue}
+                        onChange={this.handleInput}/>
+                    <button
+                        className="task-btn"
+                        type="submit">
+                        Edit
+                    </button>
+                </form>
+            </div>
+        )
+    };
+
     render() {
         const {
-            item,
-            completed,
             isDragging,
             connectDragSource,
             connectDropTarget,
@@ -122,43 +164,10 @@ class ListItem extends Component {
                 connectDropTarget(<div style={{ opacity }}>
                     <div className="item">
                         {
-                            !this.state.edit &&
-                            <div className="show-mode">
-                                <div className="wrap-text">
-                                    <div
-                                        className={`check toggle-${completed}`}
-                                        onClick={() => this.props.toggleTask(item.key)}>
-                                    </div>
-                                    <span className="text">{item.text}</span>
-                                </div>
-                                <div className="sub-panel">
-                            <span
-                                className="edit"
-                                onClick={this.toggleEditState}>
-                            </span>
-                                    <span
-                                        className="delete"
-                                        onClick={() => this.props.deleteTask(item.key)}>
-                            </span>
-                                </div>
-                            </div>
+                            !this.state.edit && this.renderTextItem()
                         }
                         {
-                            this.state.edit &&
-                            <div className="edit-mode">
-                                <form onSubmit={this.submit}>
-                                    <input
-                                        className="task-input"
-                                        placeholder="Edit task"
-                                        value={this.state.currentValue}
-                                        onChange={this.handleInput}/>
-                                    <button
-                                        className="task-btn"
-                                        type="submit">
-                                        Edit
-                                    </button>
-                                </form>
-                            </div>
+                            this.state.edit && this.renderEditItem()
                         }
 
                     </div>

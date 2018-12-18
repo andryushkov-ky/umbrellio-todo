@@ -5,8 +5,9 @@ import List from '../components/List'
 const update = require('immutability-helper');
 
 class Main extends Component {
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
+
         this.state = {
             todos: [
                 {text: 'Default 1', key: 123, completed: false},
@@ -14,40 +15,21 @@ class Main extends Component {
                 {text: 'Default 3', key: 12344, completed: false},
                 {text: 'Default 4', key: 12345, completed: false}
             ],
-            currentValue: '',
         };
-
-        this.editTask = this.editTask.bind(this);
-        this.moveCard = this.moveCard.bind(this);
     }
 
-    handleInput = e => {
-        this.setState({
-            currentValue: e.target.value
-        })
-    };
-
-    addTask = e => {
-        e.preventDefault();
-
-        if (this.state.currentValue == '') return null;
-
-        const task = {
-            text: this.state.currentValue,
-            completed: false,
-            key: Date.now()
-        };
+    addTask = task => {
         const todos = [task, ...this.state.todos];
+
         this.setState({
-            todos: todos,
-            currentValue: ''
+            todos: todos
         });
-        e.target.reset();
     };
 
     toggleTask = key => {
         const arr = this.state.todos;
         const index = arr.findIndex((obj => obj.key === key));
+
         arr[index].completed = !arr[index].completed;
 
         this.setState({
@@ -91,8 +73,7 @@ class Main extends Component {
         return (
             <div className="main">
                 <AddForm
-                    addTask={this.addTask}
-                    handleInput={this.handleInput}/>
+                    addTask={this.addTask}/>
                 <List
                     tasks={this.state.todos}
                     deleteTask={this.deleteTask}
